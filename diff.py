@@ -8,8 +8,6 @@ import sympy
 import scipy
 from scipy.integrate import quad
 
-
-
 class proficiency:
     def __init__(self):
         self.avg = None # Average of last three times
@@ -135,20 +133,20 @@ while(stageTwo):
         numOne = pair[0]
         numTwo = pair[1]
 
-    print("\n\n",numTwo, "*", numOne)
+    print("\n\n","|",numTwo, "-", numOne, "|")
     start = time.time()
     try:
         answer = int(input())
     except:
         pf.save(cards)
 
-    if answer == numOne*numTwo:
+    if answer == abs(numOne-numTwo):
         print("!!!GREAT!!!")
         elapse = time.time() - start 
         prof.newTime(elapse)
     else:
         print("???BOO???")
-        print(numTwo, "*", numOne, "=", numOne*numTwo)
+        print(numTwo, "-", numOne, "=", numOne*numTwo)
         answer = input()
         if answer == "save":
             pf.save(cards)
