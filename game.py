@@ -7,6 +7,7 @@ import numpy
 import sympy
 import scipy
 from scipy.integrate import quad
+from integral_mapper import IntegralMap
 
 
 
@@ -32,28 +33,6 @@ class proficiency:
     def __average(self, avg):
         self.avg = statistics.mean(self.__lastThreeTimes)
         
-class integralMap:
-    def __init__(self, numOfQuestions):
-        self.__divisions = [] # list of points on the map
-        self.__integralSliceLength = 1/numOfQuestions #Length of each sub interval
-        print("test")
-        f = lambda x: -numpy.log(x) # Function which detrmines the distrobution of weights
-        for i in range(0, numOfQuestions-1):
-            sliceProgress = self.__integralSliceLength * (i+1) 
-            self.__divisions.append(quad(f, 0, sliceProgress)[0])
-
-    def pickRandomIndex(self):
-        index = 0
-        value = random.uniform(0, 1)
-        for x in self.__divisions:
-            if value < x:
-                return index
-            index = index + 1
-        return index
-
-    def __function(x):
-        return numpy.log(x) 
-
 class pickleFriend:
     def __init__(self):
        print("PickleGuy created")         
@@ -117,7 +96,7 @@ while(stageOne):
         cards = newCards()
         stageOne = False 
 
-distro = integralMap(len(cards))
+distro = IntegralMap(len(cards), lambda x: -numpy.log(x), 0,1)
 stageTwo = True
 while(stageTwo):
     cards = sortByProficiency(cards)
